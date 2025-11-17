@@ -1,0 +1,46 @@
+ // compute-sri-local.js
+// Ejecutar en la raíz (donde está index.html). Calcula SRI de archivos locales y actualiza index.html.
+
+const fs = require('fs');
+const crypto = require('crypto');
+const path = require('path');
+
+const files = [
+  "_assets/a0684b0780c739e9.vendor.ltr.css",
+  "_assets/09f21f9436a30d8f.ltr.css",
+  "_assets/d7618de68fac7c06.runtime.js",
+  "_assets/1194272a367de1cd.s4le6a.vendor.js",
+  "_assets/3dd13573d5b77f96.vendor.js",
+  "_assets/d8040e7954d85279.strings.js",
+  "_assets/24a1173e946da9c6.es-ES.js",
+  "_assets/785f471ac533f396.js"
+];
+
+const indexPath = path.join(process.cwd(), 'index.html');
+if (!fs.existsSync(indexPath)) {
+  console.error('index.html no encontrado');
+  process.exit(1);
+}
+let html = fs.readFileSync(indexPath, 'utf8');
+
+files.forEach(rel => {
+  if (!fs.existsSync(rel)) {
+    console.warn('Archivo no encontrado, omitiendo:', rel);
+    return;
+  }
+  const buf = fs.readFileSync(rel);
+  const hash = crypto.createHash('sha384').update(buf).digest('base64');
+  const sri = `sha384-${hash}`;
+  const escaped = rel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`(<(?:(?:link)|(?:script))[^>]*?(?:href|src)\\s*=\\s*["'][^"']*${escaped}[^"']*["'][^>]*?integrity\\s*=\\s*["'])SRI_PLACEHOLDER(["'])`, 'is');
+  if (pattern.test(html)) {
+    html = html.replace(pattern, `$1${sri}$2`);
+    console.log(`Reemplazado SRI para ${rel} -> ${sri}`);
+  } else {
+    console.warn(`No se encontró etiqueta con SRI_PLACEHOLDER para ${rel}.`);
+  }
+});
+
+fs.copyFileSync(indexPath, indexPath + '.bak');
+fs.writeFileSync(indexPath, html, 'utf8');
+console.log('Proceso finalizado. Backup creado: index.html.bak');
