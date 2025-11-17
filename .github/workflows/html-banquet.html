@@ -1,0 +1,155 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Cotización de Banquetes</title>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: #2a3b47;
+        }
+        form {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        /* Contenedor para cada campo del formulario */
+        div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            /* Asegura que el padding no afecte el ancho total */
+            box-sizing: border-box; 
+        }
+        fieldset {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+        /* Estilos para los checkboxes */
+        fieldset div {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #4a5764; /* Un color azul llamativo */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #232e3a;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Formulario de Cotización de Banquetes</h2>
+
+    <form action="https://formspree.io/f/mvgqblyn" method="POST">
+        
+        <div>
+            <label for="name">Nombre Completo:</label>
+            <input type="text" id="name" name="Cliente" required>
+        </div>
+        
+        <div>
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="Email" required>
+        </div>
+
+        <div style="display: flex; gap: 20px;">
+            <div style="width: 50%;">
+                <label for="date">Fecha del Evento:</label>
+                <input type="date" id="date" name="Fecha_Evento">
+            </div>
+            <div style="width: 50%;">
+                <label for="guests">Número de Invitados:</label>
+                <input type="number" id="guests" name="Invitados" min="1" placeholder="Ej: 50">
+            </div>
+        </div>
+
+        <fieldset>
+            <legend>Menús de Interés</legend>
+            <p>Selecciona las secciones que te interesan:</p>
+            
+            <div>
+                <input type="checkbox" id="interes_desayuno" name="Interes" value="Desayunos">
+                <label for="interes_desayuno">Desayunos</label>
+            </div>
+            <div>
+                <input type="checkbox" id="interes_coffee" name="Interes" value="Coffee Break">
+                <label for="interes_coffee">Coffee Break</label>
+            </div>
+            <div>
+                <input type="checkbox" id="interes_almuerzo" name="Interes" value="Almuerzos">
+                <label for="interes_almuerzo">Almuerzos (Luncheon)</label>
+            </div>
+            <div>
+                <input type="checkbox" id="interes_canapes" name="Interes" value="Canapés (Hors D'Oeuvres)">
+                <label for="interes_canapes">Canapés (Hors D'Oeuvres)</label>
+            </div>
+            <div>
+                <input type="checkbox" id="interes_cena" name="Interes" value="Cenas (Dinner)">
+                <label for="interes_cena">Cenas (Dinner)</label>
+            </div>
+            <div>
+                <input type="checkbox" id="interes_bebidas" name="Interes" value="Bebidas / Barra Libre">
+                <label for="interes_bebidas">Bebidas / Barra Libre</label>
+            </div>
+        </fieldset>
+
+        <div>
+            <label for="message">Mensaje Adicional:</label>
+            <textarea id="message" name="Mensaje" rows="6" placeholder="Cuéntanos más sobre tu evento, alergias, o peticiones especiales..."></textarea>
+        </div>
+        
+        <div>
+            <button type="submit">Enviar Solicitud de Cotización</button>
+        </div>
+        
+    </form>
+
+</body>
+</html>
